@@ -172,6 +172,7 @@
   </style>
 </head>
 <body>
+
   <div class="chat-container">
     <div class="header">
       <img src="avatar.jpg" alt="Natalia">
@@ -185,10 +186,15 @@
     </div>
     <div class="messages" id="chat"></div>
     <div class="options" id="options"></div>
+    <div id="paywall" style="display:none; flex-direction: column; align-items: center; justify-content: center; background-color: #1a1a1a; color: white; padding: 20px;">
+      <h2>Dalsza część rozmowy dostępna po odblokowaniu 🔥</h2>
+      <p>Ta rozmowa robi się gorąca... Odblokuj dostęp, by zobaczyć więcej zdjęć i filmów od Natalii 😏</p>
+      <button onclick="unlockGame()" class="option-btn" style="margin-top: 20px;">Odblokuj dostęp</button>
+    </div>
   </div>
 
-  <script>
-    const dialog = [
+<script>
+  const dialog = [
       { question: "Hej... Lubisz poznawać dziewczyny przez internet?", options: [
         { text: "Oczywiście, można tu poznać kogoś wyjątkowego.", correct: true },
         { text: "Nie, tylko się nudzę.", correct: false },
@@ -264,130 +270,151 @@
     ];
 
 
-    const chat = document.getElementById("chat");
-    const optionsContainer = document.getElementById("options");
-    let current = 0;
-    let lastOptions = [];
+  const chat = document.getElementById("chat");
+  const optionsContainer = document.getElementById("options");
+  const paywall = document.getElementById("paywall");
+  let current = 0;
+  let lastOptions = [];
+  let unlocked = false;
 
-    function scrollToBottom() {
-      setTimeout(() => {
-        chat.scrollTop = chat.scrollHeight;
-      }, 100);
-    }
+  function scrollToBottom() {
+    setTimeout(() => {
+      chat.scrollTop = chat.scrollHeight;
+    }, 100);
+  }
 
-    function playNataliaSound() {
-      const audio = new Audio("w1.mp3");
-      audio.play();
-    }
+  function playNataliaSound() {
+    const audio = new Audio("w1.mp3");
+    audio.play();
+  }
 
-    function showNataliaTyping(callback) {
-      setTimeout(() => {
-        const typing = document.createElement("div");
-        typing.className = "typing dots";
-        typing.textContent = "Natalia pisze";
-        chat.appendChild(typing);
-        scrollToBottom();
-        setTimeout(() => {
-          chat.removeChild(typing);
-          callback();
-        }, 2000);
-      }, 1000);
-    }
-
-    function showMessage(data) {
-      const row = document.createElement("div");
-      row.className = "message-row natalia";
-
-      const avatar = document.createElement("img");
-      avatar.src = "avatar.jpg";
-      avatar.alt = "avatar";
-      avatar.className = "avatar";
-
-      const bubble = document.createElement("div");
-      bubble.className = "message natalia";
-
-      if (data.question) bubble.textContent = data.question;
-      if (data.image) {
-        const img = document.createElement("img");
-        img.src = data.image;
-        img.className = "chat-img";
-        bubble.appendChild(document.createElement("br"));
-        bubble.appendChild(img);
-      }
-      if (data.video) {
-        const video = document.createElement("video");
-        video.src = data.video;
-        video.controls = true;
-        video.className = "chat-video";
-        bubble.appendChild(document.createElement("br"));
-        bubble.appendChild(video);
-      }
-
-      row.appendChild(avatar);
-      row.appendChild(bubble);
-      chat.appendChild(row);
-      playNataliaSound();
+  function showNataliaTyping(callback) {
+    setTimeout(() => {
+      const typing = document.createElement("div");
+      typing.className = "typing dots";
+      typing.textContent = "Natalia pisze";
+      chat.appendChild(typing);
       scrollToBottom();
+      setTimeout(() => {
+        chat.removeChild(typing);
+        callback();
+      }, 2000);
+    }, 1000);
+  }
+
+  function showMessage(data) {
+    const row = document.createElement("div");
+    row.className = "message-row natalia";
+
+    const avatar = document.createElement("img");
+    avatar.src = "avatar.jpg";
+    avatar.alt = "avatar";
+    avatar.className = "avatar";
+
+    const bubble = document.createElement("div");
+    bubble.className = "message natalia";
+
+    if (data.question) bubble.textContent = data.question;
+    if (data.image) {
+      const img = document.createElement("img");
+      img.src = data.image;
+      img.className = "chat-img";
+      bubble.appendChild(document.createElement("br"));
+      bubble.appendChild(img);
+    }
+    if (data.video) {
+      const video = document.createElement("video");
+      video.src = data.video;
+      video.controls = true;
+      video.className = "chat-video";
+      bubble.appendChild(document.createElement("br"));
+      bubble.appendChild(video);
     }
 
-    function showOptions(options) {
-      optionsContainer.innerHTML = "";
-      lastOptions = options;
-      options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.textContent = opt.text;
-        btn.onclick = () => handleAnswer(opt);
-        optionsContainer.appendChild(btn);
-      });
+    row.appendChild(avatar);
+    row.appendChild(bubble);
+    chat.appendChild(row);
+    playNataliaSound();
+    scrollToBottom();
+  }
+
+  function showOptions(options) {
+    optionsContainer.innerHTML = "";
+    lastOptions = options;
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = opt.text;
+      btn.onclick = () => handleAnswer(opt);
+      optionsContainer.appendChild(btn);
+    });
+  }
+
+  function showRetry() {
+    showMessage({ question: "Postaraj się bardziej, bo stracę ochotę..." });
+    const retryBtn = document.createElement("button");
+    retryBtn.className = "option-btn";
+    retryBtn.textContent = "Spróbuj ponownie";
+    retryBtn.onclick = () => showOptions(lastOptions);
+    optionsContainer.innerHTML = "";
+    optionsContainer.appendChild(retryBtn);
+  }
+
+  function handleAnswer(option) {
+    const row = document.createElement("div");
+    row.className = "message-row user";
+
+    const bubble = document.createElement("div");
+    bubble.className = "message user";
+    bubble.textContent = option.text;
+
+    row.appendChild(bubble);
+    chat.appendChild(row);
+    scrollToBottom();
+    optionsContainer.innerHTML = "";
+
+    if (!option.correct) {
+      showNataliaTyping(showRetry);
+      return;
     }
 
-    function showRetry() {
-      showMessage({ question: "Postaraj się bardziej, bo stracę ochotę..." });
-      const retryBtn = document.createElement("button");
-      retryBtn.className = "option-btn";
-      retryBtn.textContent = "Spróbuj ponownie";
-      retryBtn.onclick = () => showOptions(lastOptions);
-      optionsContainer.innerHTML = "";
-      optionsContainer.appendChild(retryBtn);
+    current++;
+
+    // BLOKADA po 4 wiadomościach
+    if (current === 4 && !unlocked) {
+      paywall.style.display = "flex";
+      chat.style.display = "none";
+      optionsContainer.style.display = "none";
+      return;
     }
 
-    function handleAnswer(option) {
-      const row = document.createElement("div");
-      row.className = "message-row user";
-
-      const bubble = document.createElement("div");
-      bubble.className = "message user";
-      bubble.textContent = option.text;
-
-      row.appendChild(bubble);
-      chat.appendChild(row);
-      scrollToBottom();
-      optionsContainer.innerHTML = "";
-
-      if (!option.correct) {
-        showNataliaTyping(showRetry);
-        return;
-      }
-
-      current++;
-      if (current >= dialog.length) {
-        showNataliaTyping(() => showMessage({ question: "To była niezapomniana rozmowa..." }));
-        return;
-      }
-
-      showNataliaTyping(() => {
-        showMessage(dialog[current]);
-        showOptions(dialog[current].options);
-      });
+    if (current >= dialog.length) {
+      showNataliaTyping(() => showMessage({ question: "To była niezapomniana rozmowa..." }));
+      return;
     }
 
-    window.onload = () => {
-      showNataliaTyping(() => {
-        showMessage(dialog[0]);
-        showOptions(dialog[0].options);
-      });
-    };
-  </script>
+    showNataliaTyping(() => {
+      showMessage(dialog[current]);
+      showOptions(dialog[current].options);
+    });
+  }
+
+  function unlockGame() {
+    unlocked = true;
+    paywall.style.display = "none";
+    chat.style.display = "block";
+    optionsContainer.style.display = "block";
+    showNataliaTyping(() => {
+      showMessage(dialog[current]);
+      showOptions(dialog[current].options);
+    });
+  }
+
+  window.onload = () => {
+    showNataliaTyping(() => {
+      showMessage(dialog[0]);
+      showOptions(dialog[0].options);
+    });
+  };
+</script>
 </body>
-</html>
