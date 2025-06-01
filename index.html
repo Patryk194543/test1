@@ -66,24 +66,46 @@
       padding: 10px;
       overflow-y: auto;
     }
+
+    .message-row {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .message-row.natalia {
+      flex-direction: row;
+    }
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 8px;
+      margin-top: 4px;
+    }
+
     .message {
       max-width: 75%;
-      margin-bottom: 10px;
       padding: 8px 12px;
       border-radius: 15px;
       animation: fadeIn 0.4s ease-in-out;
+      word-wrap: break-word;
     }
-    .natalia {
+    .natalia .message {
       background-color: #ff69b4;
       color: #000;
       align-self: flex-start;
     }
-    .user {
+    .user .message {
       background-color: #6a5acd;
       color: #fff;
       align-self: flex-end;
       margin-left: auto;
     }
+
     .typing {
       font-style: italic;
       color: #aaa;
@@ -145,6 +167,7 @@
     <div class="messages" id="chat"></div>
     <div class="options" id="options"></div>
   </div>
+
   <script>
     const dialog = [
       { question: "Hej... Lubisz poznawać dziewczyny przez internet?", options: [
@@ -221,6 +244,7 @@
       ] },
     ];
 
+
     const chat = document.getElementById("chat");
     const optionsContainer = document.getElementById("options");
     let current = 0;
@@ -252,26 +276,37 @@
     }
 
     function showMessage(data) {
-      const message = document.createElement("div");
-      message.className = "message natalia";
+      const row = document.createElement("div");
+      row.className = "message-row natalia";
 
-      if (data.question) message.textContent = data.question;
+      const avatar = document.createElement("img");
+      avatar.src = "avatar.jpg";
+      avatar.alt = "avatar";
+      avatar.className = "avatar";
+
+      const bubble = document.createElement("div");
+      bubble.className = "message natalia";
+
+      if (data.question) bubble.textContent = data.question;
       if (data.image) {
         const img = document.createElement("img");
         img.src = data.image;
         img.className = "chat-img";
-        message.appendChild(document.createElement("br"));
-        message.appendChild(img);
+        bubble.appendChild(document.createElement("br"));
+        bubble.appendChild(img);
       }
       if (data.video) {
         const video = document.createElement("video");
         video.src = data.video;
         video.controls = true;
         video.className = "chat-video";
-        message.appendChild(document.createElement("br"));
-        message.appendChild(video);
+        bubble.appendChild(document.createElement("br"));
+        bubble.appendChild(video);
       }
-      chat.appendChild(message);
+
+      row.appendChild(avatar);
+      row.appendChild(bubble);
+      chat.appendChild(row);
       playNataliaSound();
       scrollToBottom();
     }
@@ -299,10 +334,15 @@
     }
 
     function handleAnswer(option) {
-      const userMsg = document.createElement("div");
-      userMsg.className = "message user";
-      userMsg.textContent = option.text;
-      chat.appendChild(userMsg);
+      const row = document.createElement("div");
+      row.className = "message-row user";
+
+      const bubble = document.createElement("div");
+      bubble.className = "message user";
+      bubble.textContent = option.text;
+
+      row.appendChild(bubble);
+      chat.appendChild(row);
       scrollToBottom();
       optionsContainer.innerHTML = "";
 
