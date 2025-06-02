@@ -1,420 +1,203 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-  <title>Flirt z Natalią</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natalia czeka...</title>
   <style>
-    html, body {
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body, html {
       margin: 0;
       padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #1a1a1a;
-      color: #fff;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      user-select: none;
+      font-family: Arial, sans-serif;
+      color: white;
     }
 
-    .chat-container {
+    .container {
+      padding: 0 5vw;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .background {
+      background-image: url('1.jpg');
+      background-size: cover;
+      background-position: center;
       width: 100%;
-      max-width: 420px;
-      height: 90vh; /* zmniejszone z 100vh */
-      background-color: #2c2c2c;
-      display: flex;
-      flex-direction: column;
-      margin: 0 auto;
-      box-shadow: 0 0 15px rgba(255, 20, 147, 0.5);
-    }
-
-    .header {
-      flex: 0 0 auto;
+      height: 90vh;
       display: flex;
       align-items: center;
-      padding: 10px;
-      background-color: #3a3a3a;
-      border-bottom: 1px solid #444;
+      justify-content: center;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 5vh;
     }
 
-    .header img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 10px;
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      color: white;
+      max-width: 600px;
     }
 
-    .header-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .name-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .online-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #00ff00;
-      border-radius: 50%;
-    }
-
-    .status-text {
-      font-size: 12px;
-      color: #aaa;
-    }
-
-    .messages {
-      flex: 1 1 auto;
-      padding: 10px;
-      overflow-y: auto;
-      max-height: 60vh; /* dodane ograniczenie wysokości */
-    }
-
-    .options {
-      flex: 0 0 160px; 
-      display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
-      padding: 10px;
-      border-top: 1px solid #444;
-      background-color: #2c2c2c;
-    }
-
-    .message-row {
-      display: flex;
-      align-items: flex-start;
+    .overlay h1 {
+      font-size: 2.5em;
       margin-bottom: 10px;
     }
 
-    .message-row.natalia {
-      flex-direction: row;
+    .overlay p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
     }
 
-    .message-row.user {
-      justify-content: flex-end;
-    }
-
-    .avatar {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      margin-right: 8px;
-      margin-top: 4px;
-    }
-
-    .message {
-      max-width: 75%;
-      padding: 8px 12px;
-      border-radius: 15px;
-      animation: fadeIn 0.4s ease-in-out;
-      word-wrap: break-word;
-    }
-
-    .natalia .message {
-      background-color: #ff69b4;
-      color: #000;
-    }
-
-    .user .message {
-      background-color: #6a5acd;
-      color: #fff;
-    }
-
-    .option-btn {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 8px;
-      background-color: #ff1493;
+    .cta-button {
+      background-color: #e60073;
       color: white;
-      font-size: 14px;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background-color 0.3s;
+      text-decoration: none;
+      display: inline-block;
     }
 
-    .option-btn:hover {
-      background-color: #ff69b4;
+    .cta-button:hover {
+      background-color: #ff3399;
     }
 
-    .chat-img, .chat-video {
+    .counter {
+      margin-top: 20px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+
+    .description {
+      margin-top: 30px;
+      background-color: #333;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 900px;
+      font-size: 1.1em;
+      line-height: 1.6em;
+      text-align: center;
+    }
+
+    .girl-select {
+      text-align: center;
+      color: white;
+      margin: 40px 0;
+      scroll-margin-top: 26px;
+    }
+
+    .girls {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .girl {
+      cursor: pointer;
+      width: 200px;
+      transition: transform 0.3s;
+      text-decoration: none;
+      color: inherit;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .girl:hover {
+      transform: scale(1.05);
+    }
+
+    .girl img {
       width: 100%;
       border-radius: 10px;
+      border: 2px solid #e60073;
+    }
+
+    .girl p {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .girl .description-text {
+      font-size: 0.9em;
       margin-top: 5px;
+      color: #ccc;
     }
 
-    .typing {
-      font-style: italic;
-      color: #aaa;
-      margin-bottom: 8px;
-      animation: fadeIn 0.3s ease-in-out;
-    }
+    @media screen and (max-width: 768px) {
+      .girls {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
+        gap: 20px;
+        justify-content: flex-start;
+      }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+      .girl {
+        scroll-snap-align: start;
+        width: 80%;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
 
-    @keyframes blink {
-      0% { opacity: 0.3; }
-      50% { opacity: 1; }
-      100% { opacity: 0.3; }
-    }
-
-    .dots::after {
-      content: '...';
-      animation: blink 1s infinite;
+      .girls::-webkit-scrollbar {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="chat-container">
-    <div class="header">
-      <img src="avatar.jpg" alt="Natalia">
-      <div class="header-info">
-        <div class="name-status">
-          <strong>Natalia</strong>
-          <span class="online-dot"></span>
-        </div>
-        <span class="status-text">Aktywna teraz</span>
+  <div class="container">
+    <div class="background">
+      <div class="overlay">
+        <h1>Natalia czeka na Ciebie…</h1>
+        <p>Flirtuj przez czat. Twoje decyzje prowadzą do nagród. Od niewinnych rozmów do coraz bardziej pikantnych wiadomości. Jeden zły ruch – i koniec zabawy.</p>
+        <a href="#girl-selection" class="cta-button">Zacznij flirt</a>
+        <div class="counter">🔥 Już 23 581 graczy flirtowało z Natalią</div>
       </div>
     </div>
-    <div class="messages" id="chat"></div>
-    <div class="options" id="options"></div>
-    <div id="paywall" style="display:none; flex-direction: column; align-items: center; justify-content: center; background-color: #1a1a1a; color: white; padding: 20px;">
-      <h2>Dalsza część rozmowy dostępna po odblokowaniu 🔥</h2>
-      <p>Ta rozmowa robi się gorąca... Odblokuj dostęp, by zobaczyć więcej zdjęć i filmów od Natalii 😏</p>
-      <button onclick="unlockGame()" class="option-btn" style="margin-top: 20px;">Odblokuj dostęp</button>
+
+    <div id="girl-selection" class="girl-select">
+      <h2>Wybierz swoją dziewczynę:</h2>
+      <div class="girls">
+        <a class="girl" href="chat_natalia.html">
+          <img src="natalia.jpg" alt="Natalia">
+          <p>Natalia</p>
+          <div class="description-text">Nieśmiała, ale uwielbia prowokować. Potrafi zaskoczyć!</div>
+        </a>
+        <a class="girl" href="chat_emma.html">
+          <img src="emma.jpg" alt="Emma">
+          <p>Emma</p>
+          <div class="description-text">Odważna, bezpośrednia i wie, czego chce. Lubisz wyzwania?</div>
+        </a>
+        <a class="girl" href="chat_sofia.html">
+          <img src="sofia.jpg" alt="Sofia">
+          <p>Sofia</p>
+          <div class="description-text">Kusicielka z klasą. Uwielbia długą grę wstępną.</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="description">
+      <p><strong>O grze:</strong><br>
+      Natalia to wirtualna dziewczyna, z którą możesz flirtować, prowokować i rozmawiać przez czat. Wybieraj swoje odpowiedzi ostrożnie – tylko jedna prowadzi do dalszej gry. Każdy etap to więcej napięcia i coraz śmielsze wiadomości. Uważaj – zła decyzja może wszystko zakończyć!</p>
     </div>
   </div>
-
-<script>
-  const dialog = [
-      { question: "Hej... Lubisz poznawać dziewczyny przez internet?", options: [
-        { text: "Oczywiście, można tu poznać kogoś wyjątkowego.", correct: true },
-        { text: "Nie, tylko się nudzę.", correct: false },
-        { text: "Zależy jak wyglądasz.", correct: false },
-        { text: "To strata czasu.", correct: false }
-      ] },
-      { question: "To miłe... A jaką kobietę najbardziej lubisz?", options: [
-        { text: "Zmysłową i trochę nieśmiałą...", correct: true },
-        { text: "Nie mam typu.", correct: false },
-        { text: "Każdą co się zgodzi.", correct: false },
-        { text: "Tylko modelki.", correct: false }
-      ] },
-      { question: "Oj... potrafisz być czarzący. Chciałbyś mnie lepiej poznać?", options: [
-        { text: "Tak, jesteś bardzo intrygująca.", correct: true },
-        { text: "Nie wiem, może.", correct: false },
-        { text: "Zobaczymy czy się rozbierzesz.", correct: false },
-        { text: "Nie, dzięki.", correct: false }
-      ] },
-      { question: "Zrobiło się gorąco... Lubisz odważniejsze rozmowy?", options: [
-        { text: "Tak, jeśli Ty też masz ochotę...", correct: true },
-        { text: "Nie bardzo.", correct: false },
-        { text: "Jestem nieśmiały.", correct: false },
-        { text: "Tylko z alkoholem.", correct: false }
-      ] },
-      { question: "To może coś Ci pokażę...", image: "1.jpg", options: [
-        { text: "Wow... piękne nogi!", correct: true },
-        { text: "Wysyłasz każdemu?", correct: false },
-        { text: "To wszystko?", correct: false },
-        { text: "Nie lubię zdjęć.", correct: false }
-      ] },
-      { question: "Lubię gdy facet umie komplementować. Chcesz więcej?", options: [
-        { text: "Zdecydowanie tak.", correct: true },
-        { text: "Już widziałem lepsze.", correct: false },
-        { text: "Nie musisz się starać.", correct: false },
-        { text: "Tylko jeśli jesteś naga.", correct: false }
-      ] },
-      { question: "A to Ci się spodoba?", image: "2.jpg", options: [
-        { text: "Zdecydowanie... masz świetne ciało.", correct: true },
-        { text: "Wolę wyobraźnię.", correct: false },
-        { text: "Za dużo pokazujesz.", correct: false },
-        { text: "Nie komentuję.", correct: false }
-      ] },
-      { question: "Powiedz mi, co zrobiłbyś gdybyśmy byli sami?", options: [
-        { text: "Zacząłbym od delikatnych pocałunków.", correct: true },
-        { text: "Od razu do rzeczy.", correct: false },
-        { text: "Nic, jestem grzeczny.", correct: false },
-        { text: "Zamówiłbym pizzę.", correct: false }
-      ] },
-      { question: "Mmm... a jak to zobaczysz?", image: "3.jpg", options: [
-        { text: "To działa na wyobraźnię...", correct: true },
-        { text: "Nie mam czasu na zdjęcia.", correct: false },
-        { text: "Następne będzie bez ubrania?", correct: false },
-        { text: "Wolę filmy.", correct: false }
-      ] },
-      { question: "To tylko dla Ciebie...", image: "4.jpg", options: [
-        { text: "Czuję jak się rozpalasz...", correct: true },
-        { text: "Po co to robisz?", correct: false },
-        { text: "Już mi się znudziło.", correct: false },
-        { text: "Mam dziewczynę.", correct: false }
-      ] },
-      { question: "Czuję jak między nami coś iskrzy...", options: [
-        { text: "Też to czuję, bardzo mocno.", correct: true },
-        { text: "Nie wiem.", correct: false },
-        { text: "To tylko czat.", correct: false },
-        { text: "Nie ma chemii.", correct: false }
-      ] },
-      { question: "Nie mogę się powstrzymać...", video: "5.mp4", options: [
-        { text: "Jesteś niesamowita...", correct: true },
-        { text: "Zrobię zrzut ekranu.", correct: false },
-        { text: "To już koniec?", correct: false },
-        { text: "To za dużo.", correct: false }
-      ] },
-    ];
-
-
-  const chat = document.getElementById("chat");
-  const optionsContainer = document.getElementById("options");
-  const paywall = document.getElementById("paywall");
-  let current = 0;
-  let lastOptions = [];
-  let unlocked = false;
-
-  function scrollToBottom() {
-    setTimeout(() => {
-      chat.scrollTop = chat.scrollHeight;
-    }, 100);
-  }
-
-  function playNataliaSound() {
-    const audio = new Audio("w1.mp3");
-    audio.play();
-  }
-
-  function showNataliaTyping(callback) {
-    setTimeout(() => {
-      const typing = document.createElement("div");
-      typing.className = "typing dots";
-      typing.textContent = "Natalia pisze";
-      chat.appendChild(typing);
-      scrollToBottom();
-      setTimeout(() => {
-        chat.removeChild(typing);
-        callback();
-      }, 2000);
-    }, 1000);
-  }
-
-  function showMessage(data) {
-    const row = document.createElement("div");
-    row.className = "message-row natalia";
-
-    const avatar = document.createElement("img");
-    avatar.src = "avatar.jpg";
-    avatar.alt = "avatar";
-    avatar.className = "avatar";
-
-    const bubble = document.createElement("div");
-    bubble.className = "message natalia";
-
-    if (data.question) bubble.textContent = data.question;
-    if (data.image) {
-      const img = document.createElement("img");
-      img.src = data.image;
-      img.className = "chat-img";
-      bubble.appendChild(document.createElement("br"));
-      bubble.appendChild(img);
-    }
-    if (data.video) {
-      const video = document.createElement("video");
-      video.src = data.video;
-      video.controls = true;
-      video.className = "chat-video";
-      bubble.appendChild(document.createElement("br"));
-      bubble.appendChild(video);
-    }
-
-    row.appendChild(avatar);
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    playNataliaSound();
-    scrollToBottom();
-  }
-
-  function showOptions(options) {
-    optionsContainer.innerHTML = "";
-    lastOptions = options;
-    options.forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "option-btn";
-      btn.textContent = opt.text;
-      btn.onclick = () => handleAnswer(opt);
-      optionsContainer.appendChild(btn);
-    });
-  }
-
-  function showRetry() {
-    showMessage({ question: "Postaraj się bardziej, bo stracę ochotę..." });
-    const retryBtn = document.createElement("button");
-    retryBtn.className = "option-btn";
-    retryBtn.textContent = "Spróbuj ponownie";
-    retryBtn.onclick = () => showOptions(lastOptions);
-    optionsContainer.innerHTML = "";
-    optionsContainer.appendChild(retryBtn);
-  }
-
-  function handleAnswer(option) {
-    const row = document.createElement("div");
-    row.className = "message-row user";
-
-    const bubble = document.createElement("div");
-    bubble.className = "message user";
-    bubble.textContent = option.text;
-
-    row.appendChild(bubble);
-    chat.appendChild(row);
-    scrollToBottom();
-    optionsContainer.innerHTML = "";
-
-    if (!option.correct) {
-      showNataliaTyping(showRetry);
-      return;
-    }
-
-    current++;
-
-    // BLOKADA po 4 wiadomościach
-    if (current === 4 && !unlocked) {
-      paywall.style.display = "flex";
-      chat.style.display = "none";
-      optionsContainer.style.display = "none";
-      return;
-    }
-
-    if (current >= dialog.length) {
-      showNataliaTyping(() => showMessage({ question: "To była niezapomniana rozmowa..." }));
-      return;
-    }
-
-    showNataliaTyping(() => {
-      showMessage(dialog[current]);
-      showOptions(dialog[current].options);
-    });
-  }
-
-  function unlockGame() {
-    unlocked = true;
-    paywall.style.display = "none";
-    chat.style.display = "block";
-    optionsContainer.style.display = "block";
-    showNataliaTyping(() => {
-      showMessage(dialog[current]);
-      showOptions(dialog[current].options);
-    });
-  }
-
-  window.onload = () => {
-    showNataliaTyping(() => {
-      showMessage(dialog[0]);
-      showOptions(dialog[0].options);
-    });
-  };
-</script>
 </body>
+</html>
