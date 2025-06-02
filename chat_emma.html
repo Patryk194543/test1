@@ -169,11 +169,29 @@
       content: '...';
       animation: blink 1s infinite;
     }
+
+    /* Dodana klasa na strzałkę */
+    .back-arrow {
+      width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      cursor: pointer;
+      fill: white;
+      flex-shrink: 0;
+      transition: fill 0.3s;
+    }
+    .back-arrow:hover {
+      fill: #ff69b4;
+    }
   </style>
 </head>
 <body>
   <div class="chat-container">
     <div class="header">
+      <!-- Strzałka powrotu do index -->
+      <svg class="back-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='index.html'">
+        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+      </svg>
       <img src="avatar.jpg" alt="Natalia">
       <div class="header-info">
         <div class="name-status">
