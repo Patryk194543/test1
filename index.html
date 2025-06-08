@@ -62,7 +62,6 @@
     .girls {
       display: flex;
       gap: 30px;
-      /* desktop: wrap */
       flex-wrap: wrap;
       justify-content: center;
     }
@@ -118,7 +117,7 @@
       box-shadow: 0 0 10px rgba(230, 0, 115, 0.3);
     }
 
-    /* MOBILE STYLING: jedna dziewczyna widoczna, wyśrodkowana, bez fragmentów innych */
+    /* MOBILE STYLING: jedna dziewczyna widoczna, wyśrodkowana, z przewijaniem */
 
     @media screen and (max-width: 768px) {
       .girls {
@@ -127,9 +126,8 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 10px;
-        gap: 0;
-        justify-content: center;
-        scroll-padding: 10vw; /* dodatkowy padding, by wyśrodkować */
+        gap: 0; /* usunięty gap, bo marginesy dadzą odstęp */
+        justify-content: flex-start;
       }
 
       .girl {
@@ -137,10 +135,9 @@
         width: 80vw;
         margin: 0 10vw;
         flex-shrink: 0;
-        /* dodaj tło, by uniknąć prześwitów */
+        box-sizing: border-box;
         background-color: #1a1a1a;
         border-radius: 12px;
-        box-sizing: border-box;
       }
 
       .girls::-webkit-scrollbar {
