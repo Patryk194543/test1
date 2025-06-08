@@ -1,9 +1,10 @@
+<!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Natalia czeka...</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body, html {
       margin: 0;
@@ -113,7 +114,6 @@
       box-shadow: 0 0 10px rgba(230, 0, 115, 0.3);
     }
 
-    /* Mobilny widok: tylko jedna dziewczyna na raz, wyśrodkowana */
     @media screen and (max-width: 768px) {
       .girls {
         flex-wrap: nowrap;
@@ -121,14 +121,15 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 10px;
-        gap: 0;
-        justify-content: center;
+        gap: 20px;
+        justify-content: flex-start;
       }
 
       .girl {
-        scroll-snap-align: center;
-        width: 80vw;       /* szerokość zajmuje 80% szerokości ekranu */
-        margin: 0 10vw;    /* marginesy po bokach, by wyśrodkować */
+        scroll-snap-align: start;
+        width: 80%;
+        margin-left: 10px;
+        margin-right: 10px;
       }
 
       .girls::-webkit-scrollbar {
@@ -145,17 +146,17 @@
       <div id="girl-anchor" style="position: relative; top: -100px;"></div>
       <div class="girls">
         <a class="girl" href="Czaty/chat_natalia/chat.html">
-          <img src="natalia.jpg" alt="Natalia" />
+          <img src="natalia.jpg" alt="Natalia">
           <p>Natalia</p>
           <div class="description-text">Nieśmiała, ale uwielbia prowokować. Potrafi zaskoczyć!</div>
         </a>
         <a class="girl" href="Czaty/chat_emma/chat.html">
-          <img src="emma.jpg" alt="Emma" />
+          <img src="emma.jpg" alt="Emma">
           <p>Emma</p>
           <div class="description-text">Odważna, bezpośrednia i wie, czego chce. Lubisz wyzwania?</div>
         </a>
         <a class="girl" href="Czaty/chat_sofia/chat.html">
-          <img src="sofia.jpg" alt="Sofia" />
+          <img src="sofia.jpg" alt="Sofia">
           <p>Sofia</p>
           <div class="description-text">Kusicielka z klasą. Uwielbia długą grę wstępną.</div>
         </a>
@@ -163,7 +164,7 @@
     </div>
 
     <div class="description">
-      <p><strong>O grze:</strong><br />
+      <p><strong>O grze:</strong><br>
       Natalia to wirtualna dziewczyna, z którą możesz flirtować, prowokować i rozmawiać przez czat. Wybieraj swoje odpowiedzi ostrożnie – tylko jedna prowadzi do dalszej gry. Każdy etap to więcej napięcia i coraz śmielsze wiadomości. Uważaj – zła decyzja może wszystko zakończyć!</p>
     </div>
   </div>
@@ -174,7 +175,7 @@
       "Choose one and start the roleplay"
     ];
     let currentIndex = 0;
-    const introText = document.getElementById("introText");
+    const introText = document.getElementById('introText');
 
     function switchText() {
       introText.style.opacity = 0;
