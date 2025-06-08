@@ -113,6 +113,7 @@
       box-shadow: 0 0 10px rgba(230, 0, 115, 0.3);
     }
 
+    /* Mobilny widok: tylko jedna dziewczyna na raz, wyśrodkowana */
     @media screen and (max-width: 768px) {
       .girls {
         flex-wrap: nowrap;
@@ -120,15 +121,14 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 10px;
-        gap: 20px;
-        justify-content: center; /* wyśrodkowanie w mobilce */
+        gap: 0;
+        justify-content: center;
       }
 
       .girl {
-        scroll-snap-align: start;
-        width: 80%;
-        margin-left: 10px;
-        margin-right: 10px;
+        scroll-snap-align: center;
+        width: 80vw;       /* szerokość zajmuje 80% szerokości ekranu */
+        margin: 0 10vw;    /* marginesy po bokach, by wyśrodkować */
       }
 
       .girls::-webkit-scrollbar {
@@ -174,7 +174,7 @@
       "Choose one and start the roleplay"
     ];
     let currentIndex = 0;
-    const introText = document.getElementById('introText');
+    const introText = document.getElementById("introText");
 
     function switchText() {
       introText.style.opacity = 0;
