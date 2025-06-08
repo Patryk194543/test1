@@ -1,8 +1,9 @@
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Natalia czeka...</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet" />
   <style>
     body, html {
       margin: 0;
@@ -70,7 +71,6 @@
       color: inherit;
       display: inline-block;
       flex-shrink: 0;
-      position: relative; /* potrzebne do animacji */
     }
 
     .girl:hover {
@@ -121,7 +121,7 @@
         -webkit-overflow-scrolling: touch;
         padding-bottom: 10px;
         gap: 20px;
-        justify-content: flex-start;
+        justify-content: center; /* wyśrodkowanie w mobilce */
       }
 
       .girl {
@@ -134,20 +134,6 @@
       .girls::-webkit-scrollbar {
         display: none;
       }
-
-      /* Animacja przesuwania pierwszego zdjęcia (pierwszego .girl) */
-      .girl:first-child {
-        animation: slideHint 3s ease-in-out infinite;
-      }
-
-      @keyframes slideHint {
-        0%, 100% {
-          transform: translateX(0);
-        }
-        50% {
-          transform: translateX(-20px);
-        }
-      }
     }
   </style>
 </head>
@@ -159,17 +145,17 @@
       <div id="girl-anchor" style="position: relative; top: -100px;"></div>
       <div class="girls">
         <a class="girl" href="Czaty/chat_natalia/chat.html">
-          <img src="natalia.jpg" alt="Natalia">
+          <img src="natalia.jpg" alt="Natalia" />
           <p>Natalia</p>
           <div class="description-text">Nieśmiała, ale uwielbia prowokować. Potrafi zaskoczyć!</div>
         </a>
         <a class="girl" href="Czaty/chat_emma/chat.html">
-          <img src="emma.jpg" alt="Emma">
+          <img src="emma.jpg" alt="Emma" />
           <p>Emma</p>
           <div class="description-text">Odważna, bezpośrednia i wie, czego chce. Lubisz wyzwania?</div>
         </a>
         <a class="girl" href="Czaty/chat_sofia/chat.html">
-          <img src="sofia.jpg" alt="Sofia">
+          <img src="sofia.jpg" alt="Sofia" />
           <p>Sofia</p>
           <div class="description-text">Kusicielka z klasą. Uwielbia długą grę wstępną.</div>
         </a>
@@ -177,7 +163,7 @@
     </div>
 
     <div class="description">
-      <p><strong>O grze:</strong><br>
+      <p><strong>O grze:</strong><br />
       Natalia to wirtualna dziewczyna, z którą możesz flirtować, prowokować i rozmawiać przez czat. Wybieraj swoje odpowiedzi ostrożnie – tylko jedna prowadzi do dalszej gry. Każdy etap to więcej napięcia i coraz śmielsze wiadomości. Uważaj – zła decyzja może wszystko zakończyć!</p>
     </div>
   </div>
@@ -208,3 +194,4 @@
     setInterval(switchText, 5000);
   </script>
 </body>
+</html>
