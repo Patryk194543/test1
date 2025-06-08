@@ -57,7 +57,6 @@
       margin: 40px 0;
       width: 100%;
       overflow: hidden;
-      position: relative;
     }
 
     .girls {
@@ -75,7 +74,6 @@
       color: inherit;
       display: inline-block;
       flex-shrink: 0;
-      position: relative;
     }
 
     .girl:hover {
@@ -120,7 +118,6 @@
     }
 
     /* MOBILE STYLING: jedna dziewczyna widoczna, wyśrodkowana, z przewijaniem */
-
     @media screen and (max-width: 768px) {
       .girls {
         flex-wrap: nowrap;
@@ -128,9 +125,8 @@
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         padding-bottom: 10px;
-        gap: 0; /* usunięty gap, bo marginesy dadzą odstęp */
+        gap: 0;
         justify-content: flex-start;
-        position: relative;
       }
 
       .girl {
@@ -141,41 +137,42 @@
         box-sizing: border-box;
         background-color: #1a1a1a;
         border-radius: 12px;
-        position: relative;
-      }
-
-      /* Strzałka mrugająca na pierwszym elemencie */
-      .girl:first-child::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 10px;
-        transform: translateY(-50%) rotate(45deg);
-        width: 40px;
-        height: 40px;
-        border-top: 4px solid #e60073;
-        border-right: 4px solid #e60073;
-        opacity: 1;
-        pointer-events: none;
-        transition: opacity 0.3s ease;
-        z-index: 10;
-        animation: blinkArrow 1.5s infinite;
-      }
-
-      /* Ukrycie strzałki po przesunięciu */
-      .girls.arrow-hidden .girl:first-child::after {
-        opacity: 0;
-        animation: none;
       }
 
       .girls::-webkit-scrollbar {
         display: none;
       }
-    }
 
-    @keyframes blinkArrow {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+      /* Strzałka widoczna tylko na pierwszym zdjęciu przed przesunięciem */
+      .girl:first-child {
+        position: relative;
+      }
+
+      .girl:first-child::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -20px;
+        transform: translateY(-50%) rotate(45deg);
+        width: 30px;
+        height: 30px;
+        border-top: 6px solid #e60073;
+        border-right: 6px solid #e60073;
+        opacity: 1;
+        pointer-events: none;
+        z-index: 10;
+        animation: blinkArrow 1.5s infinite;
+      }
+
+      .girls.arrow-hidden .girl:first-child::after {
+        opacity: 0;
+        animation: none;
+      }
+
+      @keyframes blinkArrow {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.2; }
+      }
     }
   </style>
 </head>
@@ -211,6 +208,7 @@
   </div>
 
   <script>
+    // Animacja intro
     const texts = [
       "Every girl is a different story",
       "Choose one and start the roleplay"
@@ -230,17 +228,16 @@
     setTimeout(() => {
       introText.style.opacity = 1;
     }, 500);
-
     setInterval(switchText, 5000);
 
-    // Ukrywanie strzałki po pierwszym przesunięciu w poziomie
-    const girlsContainer = document.getElementById("girlsContainer");
-    let arrowHidden = false;
+    // Ukrywanie strzałki po pierwszym przesunięciu
+    const girlsContainer = document.getElementById('girlsContainer');
+    let arrowRemoved = false;
 
     girlsContainer.addEventListener('scroll', () => {
-      if (!arrowHidden && girlsContainer.scrollLeft > 10) {
+      if (!arrowRemoved && girlsContainer.scrollLeft > 10) {
         girlsContainer.classList.add('arrow-hidden');
-        arrowHidden = true;
+        arrowRemoved = true;
       }
     });
   </script>
