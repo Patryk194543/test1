@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,6 +70,7 @@
       color: inherit;
       display: inline-block;
       flex-shrink: 0;
+      position: relative; /* potrzebne do animacji */
     }
 
     .girl:hover {
@@ -135,6 +134,20 @@
       .girls::-webkit-scrollbar {
         display: none;
       }
+
+      /* Animacja przesuwania pierwszego zdjęcia (pierwszego .girl) */
+      .girl:first-child {
+        animation: slideHint 3s ease-in-out infinite;
+      }
+
+      @keyframes slideHint {
+        0%, 100% {
+          transform: translateX(0);
+        }
+        50% {
+          transform: translateX(-20px);
+        }
+      }
     }
   </style>
 </head>
@@ -195,4 +208,3 @@
     setInterval(switchText, 5000);
   </script>
 </body>
-</html>
