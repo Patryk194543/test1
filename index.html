@@ -64,6 +64,7 @@
       gap: 30px;
       flex-wrap: wrap;
       justify-content: center;
+      position: relative; /* dla strzałki absolutnej */
     }
 
     .girl {
@@ -74,6 +75,7 @@
       color: inherit;
       display: inline-block;
       flex-shrink: 0;
+      position: relative;
     }
 
     .girl:hover {
@@ -143,6 +145,29 @@
       .girls::-webkit-scrollbar {
         display: none;
       }
+
+      /* STRZAŁKA: pokazujemy tylko na pierwszym elemencie, jeśli nie przesunięto jeszcze */
+      .girl:first-child::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        border-top: 4px solid #e60073;
+        border-right: 4px solid #e60073;
+        transform-origin: center;
+        transform: translateY(-50%) rotate(45deg);
+        opacity: 1;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 10;
+      }
+      /* Klasa .hide-arrow schowa strzałkę */
+      .girl:first-child.hide-arrow::after {
+        opacity: 0;
+      }
     }
   </style>
 </head>
@@ -152,7 +177,7 @@
 
     <div id="girl-selection" class="girl-select">
       <div id="girl-anchor" style="position: relative; top: -100px;"></div>
-      <div class="girls">
+      <div class="girls" id="girlsContainer">
         <a class="girl" href="Czaty/chat_natalia/chat.html">
           <img src="natalia.jpg" alt="Natalia" />
           <p>Natalia</p>
@@ -199,6 +224,26 @@
     }, 500);
 
     setInterval(switchText, 5000);
+
+    // LOGIKA STRZAŁKI na mobilkach
+    const girlsContainer = document.getElementById('girlsContainer');
+    const firstGirl = girlsContainer.querySelector('.girl:first-child');
+
+    function checkScroll() {
+      if (girlsContainer.scrollLeft > 5) {
+        // Ukryj strzałkę
+        firstGirl.classList.add('hide-arrow');
+      } else {
+        // Pokaż strzałkę
+        firstGirl.classList.remove('hide-arrow');
+      }
+    }
+
+    // Nasłuchuj scrolla na kontenerze dziewczyn
+    girlsContainer.addEventListener('scroll', checkScroll);
+
+    // Na start sprawdzamy, czy jest scrollLeft > 0 (np. jeśli użytkownik wróci do strony)
+    checkScroll();
   </script>
 </body>
 </html>
