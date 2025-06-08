@@ -74,6 +74,7 @@
       color: inherit;
       display: inline-block;
       flex-shrink: 0;
+      position: relative;
     }
 
     .girl:hover {
@@ -142,37 +143,24 @@
       .girls::-webkit-scrollbar {
         display: none;
       }
+    }
 
-      /* Strzałka widoczna tylko na pierwszym zdjęciu przed przesunięciem */
-      .girl:first-child {
-        position: relative;
-      }
+    /* PULSUJĄCA STRZAŁKA */
+    .arrow {
+      position: absolute;
+      right: -15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+      color: #ff66b2;
+      animation: pulse 1.2s infinite;
+      pointer-events: none;
+      text-shadow: 0 0 10px #ff66b2;
+    }
 
-      .girl:first-child::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -20px;
-        transform: translateY(-50%) rotate(45deg);
-        width: 30px;
-        height: 30px;
-        border-top: 6px solid #e60073;
-        border-right: 6px solid #e60073;
-        opacity: 1;
-        pointer-events: none;
-        z-index: 10;
-        animation: blinkArrow 1.5s infinite;
-      }
-
-      .girls.arrow-hidden .girl:first-child::after {
-        opacity: 0;
-        animation: none;
-      }
-
-      @keyframes blinkArrow {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.2; }
-      }
+    @keyframes pulse {
+      0%, 100% { transform: translateY(-50%) scale(1); opacity: 1; }
+      50% { transform: translateY(-50%) scale(1.3); opacity: 0.6; }
     }
   </style>
 </head>
@@ -182,9 +170,10 @@
 
     <div id="girl-selection" class="girl-select">
       <div id="girl-anchor" style="position: relative; top: -100px;"></div>
-      <div class="girls" id="girlsContainer">
+      <div class="girls">
         <a class="girl" href="Czaty/chat_natalia/chat.html">
           <img src="natalia.jpg" alt="Natalia" />
+          <div class="arrow">➜</div>
           <p>Natalia</p>
           <div class="description-text">Nieśmiała, ale uwielbia prowokować. Potrafi zaskoczyć!</div>
         </a>
@@ -208,7 +197,6 @@
   </div>
 
   <script>
-    // Animacja intro
     const texts = [
       "Every girl is a different story",
       "Choose one and start the roleplay"
@@ -228,18 +216,8 @@
     setTimeout(() => {
       introText.style.opacity = 1;
     }, 500);
+
     setInterval(switchText, 5000);
-
-    // Ukrywanie strzałki po pierwszym przesunięciu
-    const girlsContainer = document.getElementById('girlsContainer');
-    let arrowRemoved = false;
-
-    girlsContainer.addEventListener('scroll', () => {
-      if (!arrowRemoved && girlsContainer.scrollLeft > 10) {
-        girlsContainer.classList.add('arrow-hidden');
-        arrowRemoved = true;
-      }
-    });
   </script>
 </body>
 </html>
